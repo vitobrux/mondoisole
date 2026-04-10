@@ -4,16 +4,21 @@ compatibility_date = "2024-12-01"
 
 # Deploy target: mondoisole.vito-brullo-brux.workers.dev
 
-# D1 Database binding
+# D1 Database
 [[d1_databases]]
 binding = "DB"
-database_name = "mondoisole-db"
-database_id = "placeholder-will-be-set-after-creation"
+database_name = "mi-db"
+database_id = "e48039a9-c342-46dc-a498-4df2f559f524"
 
-# R2 Bucket binding
+# R2 Object Storage
 [[r2_buckets]]
 binding = "R2"
-bucket_name = "mondoisole-assets"
+bucket_name = "mi-storage"
+
+# KV Namespace (caching)
+[[kv_namespaces]]
+binding = "KV"
+id = "79a7abf481094c40ab78b2315539f42e"
 
 # Environment variables (set via wrangler secret put)
 # JWT_SECRET - for admin auth tokens

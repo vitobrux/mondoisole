@@ -154,8 +154,8 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
       httpMetadata: { contentType: file.type },
     });
 
-    // Return the public URL (served via R2 public access)
-    const publicUrl = `https://assets.mondoisole.net/${key}`;
+    // Return the public URL (served via Worker /assets/ route)
+    const publicUrl = `https://mondoisole.vito-brullo-brux.workers.dev/assets/${key}`;
     return jsonResponse({ url: publicUrl }, 200, request);
   }
 
