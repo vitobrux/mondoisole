@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" fill="none">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="100%" style="stop-color:#0369A1"/>
+    </linearGradient>
+  </defs>
+  <!-- Icon: sun + waves -->
+  <circle cx="30" cy="30" r="28" fill="url(#logoGrad)"/>
+  <circle cx="30" cy="20" r="9" fill="#FBBF24" opacity="0.95"/>
+  <path d="M6 34 Q14 28 30 33 Q46 38 54 32 L54 44 Q46 50 30 46 Q14 42 6 48 Z" fill="#ffffff" opacity="0.9"/>
+  <path d="M6 38 Q14 32 30 37 Q46 42 54 36 L54 48 Q46 54 30 50 Q14 46 6 52 Z" fill="#06B6D4" opacity="0.5"/>
+  <!-- Text -->
+  <text x="70" y="25" font-family="'Playfair Display', serif" font-weight="700" font-size="22" fill="#0C4A6E">MONDO</text>
+  <text x="70" y="50" font-family="'Playfair Display', serif" font-weight="700" font-size="22" fill="#0EA5E9">ISOLE</text>
+  <text x="158" y="50" font-family="'Inter', sans-serif" font-weight="400" font-size="9" fill="#64748B" letter-spacing="2">TOUR OPERATOR</text>
+</svg>
