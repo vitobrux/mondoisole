@@ -21,7 +21,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-brand-200">
               <li><Link to="/croazia" className="hover:text-white transition-colors">Croazia</Link></li>
               <li><Link to="/sicilia" className="hover:text-white transition-colors">Sicilia</Link></li>
-              <li><Link to="/albania" className="hover:text-white transition-colors">Albania</Link></li>
             </ul>
           </div>
 

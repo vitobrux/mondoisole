@@ -10,7 +10,6 @@ import type { Offer } from '../types';
 const HERO_IMAGES: Record<string, string> = {
   croazia: 'https://images.unsplash.com/photo-1555990538-1e15f3a64b07?w=1920&q=80',
   sicilia: 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=1920&q=80',
-  albania: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&q=80',
 };
 
 export default function DestinationPage() {

@@ -4,7 +4,7 @@ import { SITE, getWhatsAppLink } from '../lib/constants';
 
 const VALUES = [
   { icon: Award, title: 'Esperienza', desc: 'Oltre 20 anni nel settore del turismo organizzato, con partenza da Catania.' },
-  { icon: Globe, title: 'Destinazioni Selezionate', desc: 'Croazia, Sicilia e Albania: solo le migliori strutture, verificate personalmente.' },
+  { icon: Globe, title: 'Destinazioni Selezionate', desc: 'Croazia e Sicilia: solo le migliori strutture, verificate personalmente.' },
   { icon: HeadphonesIcon, title: 'Assistenza Continua', desc: 'Ti seguiamo prima, durante e dopo il viaggio con supporto dedicato.' },
   { icon: Users, title: 'Fiducia', desc: '30.000 viaggiatori ci hanno già scelto. La nostra forza è il passaparola.' },
 ];
@@ -41,7 +41,7 @@ export default function ChiSiamoPage() {
                 <strong className="text-gray-900">Mondoisole</strong> nasce a Catania con un obiettivo chiaro: rendere il viaggio un'esperienza semplice, sicura e indimenticabile per tutti i siciliani.
               </p>
               <p>
-                Da oltre 20 anni organizziamo vacanze verso le pi&ugrave; belle destinazioni del Mediterraneo. Siamo partiti con i voli charter verso la Croazia e l'Albania, portando circa <strong className="text-gray-900">30.000 persone</strong> a scoprire le coste dalmate e le spiagge albanesi.
+                Da oltre 20 anni organizziamo vacanze verso le pi&ugrave; belle destinazioni del Mediterraneo. Siamo partiti con i voli charter verso la Croazia, portando circa <strong className="text-gray-900">30.000 persone</strong> a scoprire le coste dalmate.
               </p>
               <p>
                 Oggi continuiamo con lo stesso spirito: selezioniamo le migliori strutture, costruiamo pacchetti su misura e offriamo un'assistenza personale che va dal primo contatto fino al ritorno a casa.

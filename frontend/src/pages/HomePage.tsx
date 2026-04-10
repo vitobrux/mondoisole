@@ -10,7 +10,6 @@ import type { Offer } from '../types';
 const DESTINATION_IMAGES: Record<string, string> = {
   croazia: 'https://images.unsplash.com/photo-1555990538-1e15f3a64b07?w=600&q=80',
   sicilia: 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=600&q=80',
-  albania: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&q=80',
 };
 
 const STRENGTHS = [
@@ -32,7 +31,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Mondoisole Tour Operator | Vacanze in Croazia, Sicilia e Albania da Catania</title>
+        <title>Mondoisole Tour Operator | Vacanze in Croazia e Sicilia da Catania</title>
         <meta name="description" content={SITE.description} />
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org',
@@ -70,7 +69,7 @@ export default function HomePage() {
               Le tue vacanze da sogno<br />partono da Catania
             </h1>
             <p className="text-lg md:text-xl text-white/85 mb-8 max-w-xl">
-              Croazia, Sicilia e Albania: pacchetti vacanza selezionati con oltre 20 anni di esperienza. Volo + hotel, tutto organizzato.
+              Croazia e Sicilia: pacchetti vacanza selezionati con oltre 20 anni di esperienza. Volo + hotel, tutto organizzato.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a

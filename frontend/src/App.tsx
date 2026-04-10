@@ -22,7 +22,6 @@ export default function App() {
             <Route index element={<HomePage />} />
             <Route path="/croazia" element={<DestinationPage />} />
             <Route path="/sicilia" element={<DestinationPage />} />
-            <Route path="/albania" element={<DestinationPage />} />
             <Route path="/offerta/:id" element={<OfferDetailPage />} />
             <Route path="/chi-siamo" element={<ChiSiamoPage />} />
             <Route path="/contatti" element={<ContattiPage />} />

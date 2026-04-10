@@ -99,7 +99,6 @@ export default function AdminOfferForm({ token, offer, onSaved, onCancel }: Prop
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition">
             <option value="croazia">Croazia</option>
             <option value="sicilia">Sicilia</option>
-            <option value="albania">Albania</option>
           </select>
         </div>
 

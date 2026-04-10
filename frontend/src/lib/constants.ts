@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Mondoisole',
   tagline: 'Tour Operator',
   fullName: 'Mondoisole Tour Operator',
-  description: 'Vacanze in Croazia, Sicilia e Albania da Catania. Pacchetti volo + hotel, tour organizzati. 20 anni di esperienza.',
+  description: 'Vacanze in Croazia e Sicilia da Catania. Pacchetti volo + hotel, tour organizzati. 20 anni di esperienza.',
   phone: '+39 095 88 38 995',
   mobile: '+39 348 178 2499',
   whatsappNumber: '393481782499',
@@ -37,14 +37,6 @@ export const DESTINATIONS = [
     tagline: 'La tua isola, come non l\'hai mai vista',
     description: 'Resort e villaggi selezionati per vivere la Sicilia in tutto il suo splendore. Da Taormina a San Vito Lo Capo, offerte esclusive per chi vuole restare vicino ma sentirsi lontano.',
     color: 'accent',
-    emoji: '',
-  },
-  {
-    slug: 'albania' as const,
-    name: 'Albania',
-    tagline: 'Tour esclusivi nella perla dei Balcani',
-    description: 'Saranda, Ksamil e le meraviglie della costa albanese: tour selezionati per scoprire il fascino autentico dell\'Albania con la garanzia Mondoisole.',
-    color: 'sea',
     emoji: '',
   },
 ] as const;

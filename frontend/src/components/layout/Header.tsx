@@ -8,7 +8,6 @@ const NAV_ITEMS = [
   { to: '/', label: 'Home' },
   { to: '/croazia', label: 'Croazia' },
   { to: '/sicilia', label: 'Sicilia' },
-  { to: '/albania', label: 'Albania' },
   { to: '/chi-siamo', label: 'Chi Siamo' },
   { to: '/contatti', label: 'Contatti' },
 ];

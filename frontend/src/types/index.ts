@@ -1,7 +1,7 @@
 export interface Offer {
   id: string;
   title: string;
-  destination: 'croazia' | 'sicilia' | 'albania';
+  destination: 'croazia' | 'sicilia';
   coverImage: string;
   gallery: string[];
   shortDescription: string;
@@ -29,7 +29,7 @@ export interface ContactRequest {
 }
 
 export interface Destination {
-  slug: 'croazia' | 'sicilia' | 'albania';
+  slug: 'croazia' | 'sicilia';
   name: string;
   tagline: string;
   description: string;
