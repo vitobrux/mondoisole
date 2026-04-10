@@ -8,7 +8,7 @@ export interface Env {
 
 import { handlePublicRoutes } from './routes/public';
 import { handleAdminRoutes } from './routes/admin';
-import { corsHeaders, jsonResponse, errorResponse } from './utils/response';
+import { corsHeaders, errorResponse } from './utils/response';
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -17,7 +17,7 @@ export default {
 
     // CORS preflight
     if (request.method === 'OPTIONS') {
-      return new Response(null, { status: 204, headers: corsHeaders() });
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
     }
 
     try {
@@ -31,10 +31,10 @@ export default {
         return await handleAdminRoutes(request, env, url);
       }
 
-      return errorResponse('Not found', 404);
+      return errorResponse('Not found', 404, request);
     } catch (err) {
       console.error('Worker error:', err);
-      return errorResponse('Internal server error', 500);
+      return errorResponse('Internal server error', 500, request);
     }
   },
 };

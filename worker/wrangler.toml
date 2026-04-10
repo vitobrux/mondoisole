@@ -1,6 +1,8 @@
-name = "mondoisole-api"
+name = "mondoisole"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
+
+# Deploy target: mondoisole.vito-brullo-brux.workers.dev
 
 # D1 Database binding
 [[d1_databases]]
@@ -13,7 +15,7 @@ database_id = "placeholder-will-be-set-after-creation"
 binding = "R2"
 bucket_name = "mondoisole-assets"
 
-# Environment variables (set via wrangler secret)
+# Environment variables (set via wrangler secret put)
 # JWT_SECRET - for admin auth tokens
 # ADMIN_EMAIL - admin login email
-# ADMIN_PASSWORD_HASH - bcrypt hash of admin password
+# ADMIN_PASSWORD_HASH - SHA-256 hex hash of admin password

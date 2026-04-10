@@ -45,31 +45,31 @@ export async function handlePublicRoutes(request: Request, env: Env, url: URL): 
 
     const results = await env.DB.prepare(query).bind(...params).all();
     const offers = (results.results || []).map(parseOfferRow);
-    return jsonResponse(offers);
+    return jsonResponse(offers, 200, request);
   }
 
   // GET /api/offers/:id — single offer
   if (path.startsWith('/api/offers/') && request.method === 'GET') {
     const id = path.split('/api/offers/')[1];
-    if (!id) return errorResponse('Missing offer ID', 400);
+    if (!id) return errorResponse('Missing offer ID', 400, request);
 
     const result = await env.DB.prepare('SELECT * FROM offers WHERE id = ?1 AND status = ?2').bind(id, 'published').first();
-    if (!result) return errorResponse('Offer not found', 404);
-    return jsonResponse(parseOfferRow(result));
+    if (!result) return errorResponse('Offer not found', 404, request);
+    return jsonResponse(parseOfferRow(result), 200, request);
   }
 
   // POST /api/contact — submit contact form
   if (path === '/api/contact' && request.method === 'POST') {
     const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
     if (!checkRateLimit(clientIP)) {
-      return errorResponse('Troppe richieste. Riprova più tardi.', 429);
+      return errorResponse('Troppe richieste. Riprova più tardi.', 429, request);
     }
 
     let body: Record<string, unknown>;
     try {
       body = await request.json();
     } catch {
-      return errorResponse('Invalid JSON', 400);
+      return errorResponse('Invalid JSON', 400, request);
     }
 
     const name = sanitizeString(body.name);
@@ -78,20 +78,20 @@ export async function handlePublicRoutes(request: Request, env: Env, url: URL): 
     const message = sanitizeString(body.message);
     const offerId = sanitizeString(body.offerId);
 
-    if (!name || name.length < 2) return errorResponse('Nome richiesto.', 400);
-    if (!validateEmail(email)) return errorResponse('Email non valida.', 400);
-    if (!validatePhone(phone)) return errorResponse('Telefono non valido.', 400);
-    if (!message || message.length < 10) return errorResponse('Messaggio troppo breve.', 400);
+    if (!name || name.length < 2) return errorResponse('Nome richiesto.', 400, request);
+    if (!validateEmail(email)) return errorResponse('Email non valida.', 400, request);
+    if (!validatePhone(phone)) return errorResponse('Telefono non valido.', 400, request);
+    if (!message || message.length < 10) return errorResponse('Messaggio troppo breve.', 400, request);
 
     const id = crypto.randomUUID();
     await env.DB.prepare(
       'INSERT INTO contacts (id, name, email, phone, message, offer_id, created_at, read) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, 0)'
     ).bind(id, name, email, phone, message, offerId || null, new Date().toISOString()).run();
 
-    return jsonResponse({ success: true });
+    return jsonResponse({ success: true }, 200, request);
   }
 
-  return errorResponse('Not found', 404);
+  return errorResponse('Not found', 404, request);
 }
 
 function parseOfferRow(row: Record<string, unknown>) {

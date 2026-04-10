@@ -12,36 +12,36 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
     try {
       body = await request.json();
     } catch {
-      return errorResponse('Invalid JSON', 400);
+      return errorResponse('Invalid JSON', 400, request);
     }
 
     const email = sanitizeString(body.email);
     const password = typeof body.password === 'string' ? body.password : '';
 
     if (email !== env.ADMIN_EMAIL) {
-      return errorResponse('Credenziali non valide.', 401);
+      return errorResponse('Credenziali non valide.', 401, request);
     }
 
     const valid = await verifyPassword(password, env.ADMIN_PASSWORD_HASH);
     if (!valid) {
-      return errorResponse('Credenziali non valide.', 401);
+      return errorResponse('Credenziali non valide.', 401, request);
     }
 
     const token = await createToken({ email, role: 'admin' }, env.JWT_SECRET);
-    return jsonResponse({ token });
+    return jsonResponse({ token }, 200, request);
   }
 
   // All other admin routes require authentication
   const authenticated = await authenticateRequest(request, env);
   if (!authenticated) {
-    return errorResponse('Non autorizzato.', 401);
+    return errorResponse('Non autorizzato.', 401, request);
   }
 
   // GET /api/admin/offers
   if (path === '/api/admin/offers' && request.method === 'GET') {
     const results = await env.DB.prepare('SELECT * FROM offers ORDER BY created_at DESC').all();
     const offers = (results.results || []).map(parseOfferRow);
-    return jsonResponse(offers);
+    return jsonResponse(offers, 200, request);
   }
 
   // POST /api/admin/offers — create
@@ -50,13 +50,13 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
     try {
       body = await request.json();
     } catch {
-      return errorResponse('Invalid JSON', 400);
+      return errorResponse('Invalid JSON', 400, request);
     }
 
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
     const title = sanitizeString(body.title);
-    if (!title) return errorResponse('Titolo richiesto.', 400);
+    if (!title) return errorResponse('Titolo richiesto.', 400, request);
 
     await env.DB.prepare(`
       INSERT INTO offers (id, title, destination, cover_image, gallery, short_description, full_description, price_from, price_type, dates_available, services, hotel_stars, status, featured, created_at, updated_at)
@@ -79,23 +79,23 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
     ).run();
 
     const offer = await env.DB.prepare('SELECT * FROM offers WHERE id = ?1').bind(id).first();
-    return jsonResponse(parseOfferRow(offer!), 201);
+    return jsonResponse(parseOfferRow(offer!), 201, request);
   }
 
   // PUT /api/admin/offers/:id — update
   if (path.startsWith('/api/admin/offers/') && request.method === 'PUT') {
     const id = path.split('/api/admin/offers/')[1];
-    if (!id) return errorResponse('Missing ID', 400);
+    if (!id) return errorResponse('Missing ID', 400, request);
 
     let body: Record<string, unknown>;
     try {
       body = await request.json();
     } catch {
-      return errorResponse('Invalid JSON', 400);
+      return errorResponse('Invalid JSON', 400, request);
     }
 
     const existing = await env.DB.prepare('SELECT * FROM offers WHERE id = ?1').bind(id).first();
-    if (!existing) return errorResponse('Offerta non trovata.', 404);
+    if (!existing) return errorResponse('Offerta non trovata.', 404, request);
 
     const now = new Date().toISOString();
     await env.DB.prepare(`
@@ -120,32 +120,32 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
     ).run();
 
     const updated = await env.DB.prepare('SELECT * FROM offers WHERE id = ?1').bind(id).first();
-    return jsonResponse(parseOfferRow(updated!));
+    return jsonResponse(parseOfferRow(updated!), 200, request);
   }
 
   // DELETE /api/admin/offers/:id
   if (path.startsWith('/api/admin/offers/') && request.method === 'DELETE') {
     const id = path.split('/api/admin/offers/')[1];
-    if (!id) return errorResponse('Missing ID', 400);
+    if (!id) return errorResponse('Missing ID', 400, request);
     await env.DB.prepare('DELETE FROM offers WHERE id = ?1').bind(id).run();
-    return jsonResponse({ success: true });
+    return jsonResponse({ success: true }, 200, request);
   }
 
   // POST /api/admin/upload — upload image to R2
   if (path === '/api/admin/upload' && request.method === 'POST') {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
-    if (!file) return errorResponse('No file provided.', 400);
+    if (!file) return errorResponse('No file provided.', 400, request);
 
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
     if (!allowedTypes.includes(file.type)) {
-      return errorResponse('Tipo di file non supportato. Usa JPG, PNG, WebP o AVIF.', 400);
+      return errorResponse('Tipo di file non supportato. Usa JPG, PNG, WebP o AVIF.', 400, request);
     }
 
     // Max 10MB
     if (file.size > 10 * 1024 * 1024) {
-      return errorResponse('File troppo grande. Massimo 10MB.', 400);
+      return errorResponse('File troppo grande. Massimo 10MB.', 400, request);
     }
 
     const ext = file.name.split('.').pop() || 'jpg';
@@ -154,9 +154,9 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
       httpMetadata: { contentType: file.type },
     });
 
-    // Return the public URL (will be served via R2 custom domain or public access)
+    // Return the public URL (served via R2 public access)
     const publicUrl = `https://assets.mondoisole.net/${key}`;
-    return jsonResponse({ url: publicUrl });
+    return jsonResponse({ url: publicUrl }, 200, request);
   }
 
   // GET /api/admin/contacts
@@ -172,10 +172,10 @@ export async function handleAdminRoutes(request: Request, env: Env, url: URL): P
       createdAt: row.created_at,
       read: Boolean(row.read),
     }));
-    return jsonResponse(contacts);
+    return jsonResponse(contacts, 200, request);
   }
 
-  return errorResponse('Not found', 404);
+  return errorResponse('Not found', 404, request);
 }
 
 function parseOfferRow(row: Record<string, unknown>) {

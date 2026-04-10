@@ -19,7 +19,7 @@ export const SITE = {
 } as const;
 
 export const API_BASE = import.meta.env.PROD
-  ? '/api'
+  ? 'https://mondoisole.vito-brullo-brux.workers.dev/api'
   : 'http://localhost:8787/api';
 
 export const DESTINATIONS = [
